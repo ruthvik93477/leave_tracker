@@ -1,4 +1,3 @@
-// app.js
 const express = require('express');
 const mongoose = require('mongoose');
 const fs = require('fs');
@@ -13,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(session({
-  secret: '13', // Change this to a secret key
+  secret: '13', 
   resave: false,
   saveUninitialized: true,
 }));
@@ -24,7 +23,6 @@ const pass = process.env.PASSWORD;
 const authenticate = (req, res, next) => {
   const { username, password } = req.session;
   const isAuthenticated = username === userName && password === pass;
-
   if (isAuthenticated) {
     next();
   } else {
@@ -131,7 +129,7 @@ app.post('/upload',authenticate, async (req, res) => {
   }
 });
 
-// Search.html route
+// Search
 app.get('/search',authenticate, (req, res) => {
   res.sendFile(__dirname + '/public/search.html');
 });
@@ -152,7 +150,7 @@ app.post('/search',authenticate, (req, res) => {
     });
 }); 
 
-// Delete.html route
+// Delete
 app.get('/delete',authenticate, (req, res) => {
   res.sendFile(__dirname + '/public/delete.html');
 });
@@ -186,7 +184,6 @@ app.get('/contact',(req,res)=>{
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
 
-  // Change the username and password as needed
   if (username === userName && password === pass) {
     req.session.username = username;
     req.session.password = password;
@@ -199,4 +196,3 @@ app.post('/login', (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
- 
